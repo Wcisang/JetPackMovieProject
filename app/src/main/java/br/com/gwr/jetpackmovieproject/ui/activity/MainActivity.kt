@@ -1,8 +1,9 @@
-package br.com.gwr.jetpackmovieproject.ui
+package br.com.gwr.jetpackmovieproject.ui.activity
 
 import android.os.Bundle
 import br.com.gwr.jetpackmovieproject.R
 import br.com.gwr.jetpackmovieproject.databinding.ActivityMainBinding
+import br.com.gwr.jetpackmovieproject.ui.BaseActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -11,6 +12,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
     }
 }

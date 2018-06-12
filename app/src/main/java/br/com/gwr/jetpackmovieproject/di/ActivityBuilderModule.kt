@@ -1,6 +1,6 @@
 package br.com.gwr.jetpackmovieproject.di
 
-import br.com.gwr.jetpackmovieproject.ui.MainActivity
+import br.com.gwr.jetpackmovieproject.ui.activity.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
