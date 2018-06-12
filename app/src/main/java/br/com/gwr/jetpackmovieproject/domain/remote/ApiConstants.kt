@@ -5,7 +5,10 @@ package br.com.gwr.jetpackmovieproject.domain.remote
  */
 class ApiConstants {
 
-    val ENDPOINT = "https://api.themoviedb.org/3/"
-    val IMAGE_URL = "https://image.tmdb.org/t/p/w500/"
-    val API_KEY = "69b7b9abff5c26bbe5f01669b74b9643"
+    companion object {
+        val ENDPOINT = "https://api.themoviedb.org/3/"
+        val IMAGE_URL = "https://image.tmdb.org/t/p/w500/"
+        val API_KEY = ""
+    }
+
 }
