@@ -2,6 +2,11 @@ package br.com.gwr.jetpackmovieproject.di
 
 import android.app.Application
 import android.arch.persistence.room.Room
+import br.com.gwr.jetpackmovieproject.domain.local.DataBase
+import br.com.gwr.jetpackmovieproject.domain.local.MovieDAO
+import br.com.gwr.jetpackmovieproject.domain.remote.ApiConstants
+import br.com.gwr.jetpackmovieproject.domain.remote.MovieRequestInterceptor
+import br.com.gwr.jetpackmovieproject.domain.remote.MovieService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -22,31 +27,31 @@ class AppModule {
         val okHttpClient = OkHttpClient.Builder()
         okHttpClient.connectTimeout(3, TimeUnit.SECONDS)
         okHttpClient.readTimeout(3, TimeUnit.SECONDS)
-        okHttpClient.addInterceptor(RequestInterceptor())
+        okHttpClient.addInterceptor(MovieRequestInterceptor())
         return okHttpClient.build()
     }
 
     @Provides
     @Singleton
-    internal fun provideRetrofit(okHttpClient: OkHttpClient): MovieDBService {
+    internal fun provideRetrofit(okHttpClient: OkHttpClient): MovieService {
         val retrofit = Retrofit.Builder()
                 .baseUrl(ApiConstants.ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()
 
-        return retrofit.create(MovieDBService::class.java!!)
+        return retrofit.create(MovieService::class.java)
     }
 
     @Provides
     @Singleton
-    internal fun provideMovieDatabase(application: Application): MovieDatabase {
-        return Room.databaseBuilder(application, MovieDatabase::class.java!!, "aa.db").build()
+    internal fun provideMovieDatabase(application: Application): DataBase {
+        return Room.databaseBuilder(application, DataBase::class.java, "movie.db").build()
     }
 
     @Provides
     @Singleton
-    internal fun provideMovieDao(movieDatabase: MovieDatabase): MovieDao {
+    internal fun provideMovieDao(movieDatabase: DataBase): MovieDAO {
         return movieDatabase.movieDao()
     }
 }

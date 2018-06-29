@@ -8,7 +8,7 @@ import okhttp3.Response
  */
 class MovieRequestInterceptor: Interceptor{
 
-    override fun intercept(chain: Interceptor.Chain?): Response {
+    override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
         val originalHttpUrl = originalRequest.url()
 
