@@ -6,5 +6,9 @@ package br.com.gwr.jetpackmovieproject.domain
 enum class Status {
     SUCCESS,
     ERROR,
-    LOADING
+    LOADING;
+
+    fun isSuccessful() = this == SUCCESS
+
+    fun isLoading() = this == LOADING
 }

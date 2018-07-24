@@ -3,20 +3,14 @@ package br.com.gwr.jetpackmovieproject.domain
 /**
  * Created by WCisang on 12/06/2018.
  */
-class Resource<T> private constructor(val status: Status, val data: T?, val message: String?) {
+data class Resource<ResultType>(var status: Status, var data: ResultType? = null, var errorMessage: String? = null) {
 
     companion object {
 
-        fun <T> success(data: T): Resource<T> {
-            return Resource(Status.SUCCESS, data, null)
-        }
+        fun <ResultType> success(data: ResultType): Resource<ResultType> = Resource(Status.SUCCESS, data)
 
-        fun <T> error(msg: String, data: T?): Resource<T> {
-            return Resource(Status.ERROR, data, msg)
-        }
+        fun <ResultType> loading(): Resource<ResultType> = Resource(Status.LOADING)
 
-        fun <T> loading(data: T?): Resource<T> {
-            return Resource(Status.LOADING, data, null)
-        }
+        fun <ResultType> error(message: String?): Resource<ResultType> = Resource(Status.ERROR, errorMessage = message)
     }
 }
