@@ -13,18 +13,18 @@ import br.com.gwr.jetpackmovieproject.domain.model.Movie
 class MovieAdapter : PagedListAdapter<Movie, MovieAdapter.MovieViewHolder>(REPO_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-
+        return MovieViewHolder(null)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
 
     }
 
-    class MovieViewHolder(private var binding: MovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MovieViewHolder(private var binding: MovieItemBinding?) : RecyclerView.ViewHolder(binding?.root) {
 
         fun bind(movie: Movie) {
-            binding.movie = movie
-            binding.executePendingBindings()
+            binding?.movie = movie
+            binding?.executePendingBindings()
         }
     }
 

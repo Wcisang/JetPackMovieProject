@@ -37,6 +37,7 @@ class AppModule {
         val retrofit = Retrofit.Builder()
                 .baseUrl(ApiConstants.ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(LiveDataCallAdapterFactory())
                 .client(okHttpClient)
                 .build()
 
