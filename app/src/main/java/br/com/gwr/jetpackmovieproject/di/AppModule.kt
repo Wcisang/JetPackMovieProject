@@ -7,6 +7,7 @@ import br.com.gwr.jetpackmovieproject.domain.local.MovieDAO
 import br.com.gwr.jetpackmovieproject.domain.remote.ApiConstants
 import br.com.gwr.jetpackmovieproject.domain.remote.MovieRequestInterceptor
 import br.com.gwr.jetpackmovieproject.domain.remote.MovieService
+import br.com.gwr.jetpackmovieproject.util.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

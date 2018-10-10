@@ -66,10 +66,12 @@ abstract class NetworkBoundResource<ResultType, RequestType> @MainThread constru
 
     @MainThread
     private fun setValue(newValue: Resource<ResultType?>) {
-        if (result.value != newValue) result.value = newValue
+        if (result.value != newValue){
+            result.value = newValue
+        }
     }
 
-    protected fun onFetchFailed() {}
+    protected fun onFetchFailed() {result.value = Resource.error("")}
 
     fun asLiveData(): LiveData<Resource<ResultType?>> {
         return result

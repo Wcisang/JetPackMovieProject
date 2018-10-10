@@ -12,5 +12,5 @@ import retrofit2.http.GET
 interface MovieService {
 
     @GET("movie/popular")
-    fun loadMovies(): LiveData<Resource<List<Movie>>>
+    fun loadMovies(): LiveData<Resource<MovieResponse>>
 }
