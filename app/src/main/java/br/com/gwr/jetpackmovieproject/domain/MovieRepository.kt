@@ -19,15 +19,19 @@ class MovieRepository @Inject constructor(
         val appExecutors: AppExecutors) {
 
 
-    fun loadPopularMovies(): LiveData<Resource<List<Movie>?>> {
+    fun loadPopularMovies(page: Int): LiveData<Resource<List<Movie>?>> {
         return object : NetworkBoundResource<List<Movie>, MovieResponse>(appExecutors) {
             override fun saveCallResult(item: MovieResponse) = movieDAO.saveMovies(item.results)
 
             override fun shouldFetch(data: List<Movie>?) = true
 
-            override fun loadFromDb() = movieDAO.loadMovies()
+            override fun loadFromDb(): LiveData<List<Movie>> {
+                var high = (20 * page) - 20
+                var low = 20
+                return movieDAO.loadPopularMovies(low, high)
+            }
 
-            override fun createCall() = movieService.loadMovies()
+            override fun createCall() = movieService.loadMovies(page)
 
         }.asLiveData()
     }

@@ -16,7 +16,13 @@ import br.com.gwr.jetpackmovieproject.R
 /**
  * Created by WCisang on 21/06/2018.
  */
-class MovieAdapter : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MOVIES_COMPARATOR) {
+class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+
+    var list = ArrayList<Movie>()
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -25,7 +31,7 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MOVIES_COM
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(list[position])
     }
 
     class MovieViewHolder(private var binding: MovieItemBinding?) : RecyclerView.ViewHolder(binding?.root) {
@@ -33,6 +39,13 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MOVIES_COM
         fun bind(movie: Movie) {
             binding?.movie = movie
             binding?.executePendingBindings()
+        }
+    }
+
+    fun addAll(newList: List<Movie>?) {
+        if (newList != null && newList.isNotEmpty()){
+            list.addAll(newList)
+            notifyDataSetChanged()
         }
     }
 

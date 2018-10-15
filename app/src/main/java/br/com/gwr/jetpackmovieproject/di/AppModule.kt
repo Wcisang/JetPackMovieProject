@@ -8,6 +8,7 @@ import br.com.gwr.jetpackmovieproject.domain.remote.ApiConstants
 import br.com.gwr.jetpackmovieproject.domain.remote.MovieRequestInterceptor
 import br.com.gwr.jetpackmovieproject.domain.remote.MovieService
 import br.com.gwr.jetpackmovieproject.util.LiveDataCallAdapterFactory
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -15,6 +16,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+
+
 
 /**
  * Created by WCisang on 28/05/2018.
@@ -29,6 +32,7 @@ class AppModule {
         okHttpClient.connectTimeout(3, TimeUnit.SECONDS)
         okHttpClient.readTimeout(3, TimeUnit.SECONDS)
         okHttpClient.addInterceptor(MovieRequestInterceptor())
+        okHttpClient.addNetworkInterceptor(StethoInterceptor())
         return okHttpClient.build()
     }
 

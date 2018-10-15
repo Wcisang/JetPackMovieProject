@@ -9,6 +9,7 @@ import br.com.gwr.jetpackmovieproject.R
 import br.com.gwr.jetpackmovieproject.databinding.FragmentMovieListBinding
 import br.com.gwr.jetpackmovieproject.ui.BaseFragment
 import br.com.gwr.jetpackmovieproject.ui.adapter.MovieAdapter
+import br.com.gwr.jetpackmovieproject.util.EndlessRecyclerViewScrollListener
 import br.com.gwr.jetpackmovieproject.viewmodel.MovieListViewModel
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 
@@ -27,12 +28,26 @@ class MovieListFragment : BaseFragment<MovieListViewModel, FragmentMovieListBind
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setupRecyclerView()
+        loadMovies(1)
+    }
+
+    private fun setupRecyclerView() {
         rvMovies.layoutManager = LinearLayoutManager(activity)
+        rvMovies.addOnScrollListener(object : EndlessRecyclerViewScrollListener() {
+            override fun onLoadMore(page: Int) {
+                loadMovies(page)
+            }
+        })
         val adapter = MovieAdapter()
         rvMovies.adapter = adapter
+    }
+
+    private fun loadMovies(page: Int) {
+        viewModel.loadMovies(page)
         viewModel.getLiveData().observe(this, Observer {
             if (it?.data != null)
-               adapter.submitList(it.data!!)
+                (rvMovies.adapter as MovieAdapter).addAll(it.data!!)
         })
     }
 

@@ -3,6 +3,7 @@ package br.com.gwr.jetpackmovieproject
 import android.app.Activity
 import android.app.Application
 import br.com.gwr.jetpackmovieproject.di.DaggerAppComponent
+import com.facebook.stetho.Stetho
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -18,6 +19,7 @@ class CustomApplication : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
+        Stetho.initializeWithDefaults(this)
         DaggerAppComponent
                 .builder()
                 .application(this)

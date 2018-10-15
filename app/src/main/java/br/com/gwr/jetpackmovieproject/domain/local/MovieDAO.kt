@@ -14,8 +14,8 @@ import br.com.gwr.jetpackmovieproject.domain.model.Movie
 @Dao
 interface MovieDAO {
 
-    @Query("SELECT * FROM movies")
-    fun loadMovies(): LiveData<List<Movie>>
+    @Query("SELECT * FROM movies ORDER BY popularity DESC LIMIT :low OFFSET :high")
+    fun loadPopularMovies(low: Int, high: Int) : LiveData<List<Movie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveMovies(movies: List<Movie>)
