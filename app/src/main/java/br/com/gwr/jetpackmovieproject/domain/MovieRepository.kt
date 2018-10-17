@@ -1,13 +1,16 @@
 package br.com.gwr.jetpackmovieproject.domain
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
 import br.com.gwr.jetpackmovieproject.domain.local.MovieDAO
 import br.com.gwr.jetpackmovieproject.domain.model.Movie
+import br.com.gwr.jetpackmovieproject.domain.remote.MovieImageResponse
 import br.com.gwr.jetpackmovieproject.domain.remote.MovieResponse
 import br.com.gwr.jetpackmovieproject.domain.remote.MovieService
 import br.com.gwr.jetpackmovieproject.domain.remote.NetworkBoundResource
 import br.com.gwr.jetpackmovieproject.util.AppExecutors
+import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
 /**
@@ -34,5 +37,16 @@ class MovieRepository @Inject constructor(
             override fun createCall() = movieService.loadMovies(page)
 
         }.asLiveData()
+    }
+
+    fun loadImagesFromMovie(id: Int) : LiveData<Resource<MovieImageResponse?>>{
+        val liveData = MediatorLiveData<Resource<MovieImageResponse?>>()
+        doAsync {
+            liveData.value = Resource.loading()
+            liveData.addSource(movieService.loadMovieImage(id)) {response ->
+                liveData.value = Resource.success(response?.data)
+            }
+        }
+        return liveData
     }
 }

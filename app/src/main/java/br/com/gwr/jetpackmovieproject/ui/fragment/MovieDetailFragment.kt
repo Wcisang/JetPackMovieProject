@@ -1,30 +1,33 @@
 package br.com.gwr.jetpackmovieproject.ui.fragment
 
-
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-
 import br.com.gwr.jetpackmovieproject.R
+import br.com.gwr.jetpackmovieproject.databinding.FragmentMovieDetailBinding
+import br.com.gwr.jetpackmovieproject.domain.model.Movie
+import br.com.gwr.jetpackmovieproject.ui.BaseFragment
+import br.com.gwr.jetpackmovieproject.viewmodel.MovieDetailViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- *
- */
-class MovieDetailFragment : Fragment() {
+class MovieDetailFragment : BaseFragment<MovieDetailViewModel, FragmentMovieDetailBinding>() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
+    override fun getViewModel(): Class<MovieDetailViewModel> = MovieDetailViewModel::class.java
+
+    override fun getLayoutRes(): Int = R.layout.fragment_movie_detail
+
+    companion object {
+        fun newInstance(movie: Movie) : MovieDetailFragment {
+            val bundle = Bundle ()
+            bundle.putSerializable("movie", movie)
+            val fragment = MovieDetailFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val movie = arguments?.getSerializable("movie") as Movie
+        dataBinding.movie = movie
+    }
 }

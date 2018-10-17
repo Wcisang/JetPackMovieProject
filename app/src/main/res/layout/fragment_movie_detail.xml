@@ -1,14 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.MovieDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+        <variable
+            name="movie"
+            type="br.com.gwr.jetpackmovieproject.domain.model.Movie" />
+    </data>
+
+    <android.support.constraint.motion.MotionLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        app:layoutDescription="@xml/detail_scene">
 
-</FrameLayout>
+
+        <View
+            android:id="@+id/viewStub"
+            android:layout_width="0dp"
+            android:layout_height="290dp"
+            android:background="@drawable/background_gradient"
+            android:elevation="1dp"
+            tools:ignore="UnusedAttribute" />
+
+        <ImageView
+            android:id="@+id/ivMoviePoster"
+            android:layout_width="match_parent"
+            android:layout_height="290dp"
+            android:background="@color/gray"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            app:urlImagem="@{movie.posterPath}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/imageView"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:contentDescription="@null"
+            android:elevation="20dp"
+            android:text="X"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:tint="?android:attr/textColorPrimaryInverse"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:alpha="1"
+            android:elevation="30dp"
+            tools:text="THE DARK KNIGHT"
+            android:text="@{movie.title}"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView" />
+
+        <TextView
+            android:id="@+id/titleCollapsed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:alpha="0"
+            android:elevation="30dp"
+            tools:text="THE DARK KNIGHT"
+            android:text="@{movie.title}"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/sections"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <Button
+            android:id="@+id/resumeButton"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#f57f17"
+            android:text="Resume"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/season"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="30dp"
+            android:text="2 Season"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sections"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="30dp"
+            android:text="Season 1   About   Related"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/viewStub"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvMovieImages"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewStub"/>
+
+
+    </android.support.constraint.motion.MotionLayout>
+
+</layout>

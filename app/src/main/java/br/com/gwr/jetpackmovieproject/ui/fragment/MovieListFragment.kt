@@ -1,13 +1,13 @@
 package br.com.gwr.jetpackmovieproject.ui.fragment
 
 import android.arch.lifecycle.Observer
-import android.graphics.Movie
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import br.com.gwr.jetpackmovieproject.R
 import br.com.gwr.jetpackmovieproject.databinding.FragmentMovieListBinding
+import br.com.gwr.jetpackmovieproject.domain.model.Movie
 import br.com.gwr.jetpackmovieproject.ui.BaseFragment
+import br.com.gwr.jetpackmovieproject.ui.activity.MainActivity
 import br.com.gwr.jetpackmovieproject.ui.adapter.MovieAdapter
 import br.com.gwr.jetpackmovieproject.util.EndlessRecyclerViewScrollListener
 import br.com.gwr.jetpackmovieproject.viewmodel.MovieListViewModel
@@ -39,7 +39,7 @@ class MovieListFragment : BaseFragment<MovieListViewModel, FragmentMovieListBind
                 loadMovies(page)
             }
         })
-        val adapter = MovieAdapter()
+        val adapter = MovieAdapter(this::movieClick)
         rvMovies.adapter = adapter
     }
 
@@ -49,6 +49,10 @@ class MovieListFragment : BaseFragment<MovieListViewModel, FragmentMovieListBind
             if (it?.data != null)
                 (rvMovies.adapter as MovieAdapter).addAll(it.data!!)
         })
+    }
+
+    private fun movieClick(movie: Movie) {
+        (activity as MainActivity).showDetail(movie)
     }
 
 }

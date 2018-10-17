@@ -16,7 +16,7 @@ import br.com.gwr.jetpackmovieproject.R
 /**
  * Created by WCisang on 21/06/2018.
  */
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(var listener : (Movie) -> Unit) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     var list = ArrayList<Movie>()
 
@@ -27,17 +27,18 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<MovieItemBinding>(inflater, R.layout.movie_item, parent, false)
-        return MovieViewHolder(binding)
+        return MovieViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(list[position])
     }
 
-    class MovieViewHolder(private var binding: MovieItemBinding?) : RecyclerView.ViewHolder(binding?.root) {
+    class MovieViewHolder(private var binding: MovieItemBinding?, var listener: (Movie) -> Unit) : RecyclerView.ViewHolder(binding?.root) {
 
         fun bind(movie: Movie) {
             binding?.movie = movie
+            binding?.root?.setOnClickListener { listener(movie) }
             binding?.executePendingBindings()
         }
     }
@@ -47,16 +48,5 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
             list.addAll(newList)
             notifyDataSetChanged()
         }
-    }
-
-    companion object {
-        private val MOVIES_COMPARATOR = object : DiffUtil.ItemCallback<Movie>() {
-            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
-                    oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
-                    oldItem == newItem
-        }
-
     }
 }

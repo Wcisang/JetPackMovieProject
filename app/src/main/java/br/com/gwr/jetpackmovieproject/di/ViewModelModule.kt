@@ -2,6 +2,7 @@ package br.com.gwr.jetpackmovieproject.di
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import br.com.gwr.jetpackmovieproject.viewmodel.MovieDetailViewModel
 import br.com.gwr.jetpackmovieproject.viewmodel.MovieListViewModel
 import br.com.gwr.jetpackmovieproject.viewmodel.ViewModelFactory
 import dagger.Binds
@@ -18,6 +19,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MovieListViewModel::class)
     abstract fun bindsMovieListViewModel(movieListViewModel: MovieListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MovieDetailViewModel::class)
+    abstract fun bindsMovieDetailViewModel(movieDetailViewModel: MovieDetailViewModel): ViewModel
 
     @Binds
     abstract fun bindsViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory

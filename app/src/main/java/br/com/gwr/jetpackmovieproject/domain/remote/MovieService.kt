@@ -3,6 +3,7 @@ package br.com.gwr.jetpackmovieproject.domain.remote
 import android.arch.lifecycle.LiveData
 import br.com.gwr.jetpackmovieproject.domain.Resource
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -12,4 +13,7 @@ interface MovieService {
 
     @GET("movie/popular")
     fun loadMovies(@Query("page") page: Int): LiveData<Resource<MovieResponse>>
+
+    @GET("movie/{id}/images")
+    fun loadMovieImage(@Path("id") id: Int): LiveData<Resource<MovieImageResponse>>
 }
